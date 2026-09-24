@@ -168,7 +168,7 @@
                 <img class="item-icon" src="../img/mony.png" alt="">
                 <div class="item-text-wrapper">
                     <div>零钱通</div>
-                    <div class="rate">收益率1.00%</div>
+                    <div class="rate" id="lingqianRate">收益率1.00%</div>
                 </div>
             </div>
             <div class="item-right">
@@ -270,6 +270,15 @@
             var lingqiantong = parseAmount(params.get('lingqiantong'));
             if (lingqiantong !== null) {
                 document.getElementById('moneyLingqiantong').textContent = formatMoney(lingqiantong);
+            }
+
+            // 零钱通收益率（保留原始小数位）
+            var rate = params.get('rate');
+            if (rate !== null) {
+                rate = String(rate).replace(/,/g, '').replace(/%$/, '');
+                if (!isNaN(parseFloat(rate))) {
+                    document.getElementById('lingqianRate').textContent = '收益率' + rate + '%';
+                }
             }
         })();
     </script>

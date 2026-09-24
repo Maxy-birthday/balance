@@ -243,7 +243,7 @@
                 <div class="choice-icon icon-vx">微</div>
                 <div class="choice-info">
                     <div class="choice-name">微信钱包</div>
-                    <div class="choice-desc">编辑零钱、零钱通金额</div>
+                    <div class="choice-desc">编辑零钱、零钱通金额与收益率</div>
                 </div>
                 <div class="choice-check">✓</div>
             </div>
@@ -259,6 +259,10 @@
                     <div class="form-item">
                         <label for="vx_lingqiantong">零钱通金额 (元)</label>
                         <input id="vx_lingqiantong" type="text" inputmode="decimal" value="434.19">
+                    </div>
+                    <div class="form-item full">
+                        <label for="vx_rate">零钱通收益率 (%)</label>
+                        <input id="vx_rate" type="text" inputmode="decimal" value="1.00">
                     </div>
                 </div>
                 <button class="btn-enter" id="btnEnterVx">进入微信钱包</button>
@@ -350,7 +354,7 @@
         }
 
         document.getElementById('btnEnterVx').addEventListener('click', function () {
-            var qs = 'lingqian=' + val('vx_lingqian') + '&lingqiantong=' + val('vx_lingqiantong');
+            var qs = 'lingqian=' + val('vx_lingqian') + '&lingqiantong=' + val('vx_lingqiantong') + '&rate=' + val('vx_rate');
             window.location.href = 'pages/vx.html?' + qs;
         });
 
