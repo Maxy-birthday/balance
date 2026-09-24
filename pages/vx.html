@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信钱包</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* 顶部导航栏 */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background-color: #f5f5f5;
+            position: relative;
+        }
+
+        .back-icon {
+            width: 12px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg t='1722268337659' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='4331' width='200' height='200'%3E%3Cpath d='M724.053333 959.957333a42.624 42.624 0 0 1-30.165333-12.522666L299.306667 552.853333a42.666667 42.666667 0 0 1 0-60.330666l394.581333-394.581334a42.666667 42.666667 0 1 1 60.330667 60.330667L420.16 522.666667l364.224 364.224a42.666667 42.666667 0 0 1-30.165334 73.066666z' fill='%23333333' p-id='4332'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-left: 15px;
+        }
+
+        .bill {
+            font-size: 15px;
+            color: #333;
+        }
+
+        /* 钱包内容区域 */
+        .wallet-container {
+            background-color: #fff;
+        }
+
+        .wallet-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        /* 每个item的左侧（图标+文字） */
+        .item-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-text-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 15px;
+        }
+
+        /* 右侧箭头 */
+        .arrow-right {
+            width: 12px;
+            height: 12px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ccc'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
+        }
+
+        /* 金额/备注文字 */
+        .item-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .money {
+            font-size: 16px;
+            color: #333;
+            margin-right: 8px;
+        }
+
+        .rate {
+            font-size: 12px;
+            color: #f3a85e;
+            margin-left: 8px;
+        }
+
+        /* 分付右侧备注文字 */
+        .fenfu-desc {
+            font-size: 12px;
+            color: #f0b478;
+            margin-left: 8px;
+        }
+
+        /* 底部文字区域 */
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            color: #5c6b88;
+        }
+
+        .footer span {
+            margin: 0 8px;
+        }
+
+        .footer span:first-child {
+            border-right: 1px solid #adadad;
+            padding-right: 16px;
+        }
+
+        /* 分割线样式（分付上下） */
+        .divider {
+            height: 10px;
+            background-color: #f5f5f5;
+        }
+
+        a { text-decoration: none; color: inherit; }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="header">
+        <a href="../index.html"><div class="back-icon"></div></a>
+        <div class="header-title">钱包</div>
+        <div class="bill">账单</div>
+    </div>
+
+    <!-- 钱包内容 -->
+    <div class="wallet-container">
+        <!-- 零钱 -->
+        <div class="wallet-item">
+            <div class="item-left">
+                <img class="item-icon" src="../img/coin.png" alt="">
+                <div>零钱</div>
+            </div>
+            <div class="item-right">
+                <div class="money" id="moneyLingqian">¥278.84</div>
+                <div class="arrow-right"></div>
+            </div>
+        </div>
+
+        <!-- 零钱通 -->
+        <div class="wallet-item">
+            <div class="item-left">
+                <img class="item-icon" src="../img/mony.png" alt="">
+                <div class="item-text-wrapper">
+                    <div>零钱通</div>
+                    <div class="rate">收益率1.00%</div>
+                </div>
+            </div>
+            <div class="item-right">
+                <div class="money" id="moneyLingqiantong">¥434.19</div>
+                <div class="arrow-right"></div>
+            </div>
+        </div>
+
+        <!-- 银行卡 -->
+        <div class="wallet-item">
+            <div class="item-left">
+                <img class="item-icon" src="../img/card.png" alt="">
+                <div>银行卡</div>
+            </div>
+            <div class="arrow-right"></div>
+        </div>
+
+        <!-- 亲属卡 -->
+        <div class="wallet-item">
+            <div class="item-left">
+                <img class="item-icon" src="../img/card2.png" alt="">
+                <div>亲属卡</div>
+            </div>
+            <div class="arrow-right"></div>
+        </div>
+    </div>
+
+    <!-- 分割线 -->
+    <div class="divider"></div>
+
+    <!-- 分付区域 -->
+    <div class="wallet-container">
+        <div class="wallet-item">
+            <div class="item-left">
+                <img class="item-icon" src="../img/jifen.png" alt="">
+                <div class="item-text-wrapper">
+                    <div>分付</div>
+                    <div class="fenfu-desc">自动还款不怕忘，消费转账可用</div>
+                </div>
+            </div>
+            <div class="item-right">
+                <div class="arrow-right"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分割线 -->
+    <div class="divider"></div>
+
+    <!-- 支付分/客服中心 -->
+    <div class="wallet-container">
+        <!-- 支付分 -->
+        <div class="wallet-item">
+            <div class="item-left">
+                <img class="item-icon" src="../img/zhifufen.png" alt="">
+                <div>支付分</div>
+            </div>
+            <div class="arrow-right"></div>
+        </div>
+
+        <!-- 客服中心 -->
+        <div class="wallet-item">
+            <div class="item-left">
+                <img class="item-icon" src="../img/kefu.png" alt="">
+                <div>客服中心</div>
+            </div>
+            <div class="arrow-right"></div>
+        </div>
+    </div>
+
+    <!-- 底部文字 -->
+    <div class="footer">
+        <span>身份信息</span>
+        <span>支付设置</span>
+    </div>
+
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+
+            function parseAmount(v) {
+                if (v === null) return null;
+                var n = parseFloat(String(v).replace(/,/g, ''));
+                return isNaN(n) ? null : n;
+            }
+
+            function formatMoney(n) {
+                return '¥' + n.toLocaleString('zh-CN', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
+
+            var lingqian = parseAmount(params.get('lingqian'));
+            if (lingqian !== null) {
+                document.getElementById('moneyLingqian').textContent = formatMoney(lingqian);
+            }
+
+            var lingqiantong = parseAmount(params.get('lingqiantong'));
+            if (lingqiantong !== null) {
+                document.getElementById('moneyLingqiantong').textContent = formatMoney(lingqiantong);
+            }
+        })();
+    </script>
+</body>
+</html>

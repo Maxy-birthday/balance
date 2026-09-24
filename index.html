@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>余额装X - 入口</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #e8e8ea;
+            color: #333;
+            font-size: 16px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 16px;
+        }
+
+        .entry-wrap {
+            width: 100%;
+            max-width: 420px;
+            min-width: 0;
+            overflow-x: hidden;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .page-sub {
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 26px;
+        }
+
+        /* 选择卡片 */
+        .choice-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color .2s, box-shadow .2s;
+            overflow: hidden;
+        }
+
+        .choice-card.active {
+            border-color: #ff5500;
+            box-shadow: 0 8px 24px rgba(255, 85, 0, 0.15);
+        }
+
+        .choice-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .choice-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .icon-vx { background: linear-gradient(135deg, #22c55e, #16a34a); }
+        .icon-zfb { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+        .choice-info { flex: 1; }
+
+        .choice-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .choice-desc {
+            font-size: 12.5px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        .choice-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .choice-card.active .choice-check {
+            background: #ff5500;
+            border-color: #ff5500;
+        }
+
+        /* 编辑表单 */
+        .form-panel {
+            display: none;
+            border-top: 1px dashed #eee;
+            margin-top: 16px;
+            padding-top: 16px;
+        }
+
+        .choice-card.active .form-panel {
+            display: block;
+        }
+
+        .form-title {
+            font-size: 13px;
+            color: #ff5500;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: .5px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .form-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .form-item.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-item label {
+            font-size: 12.5px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .form-item input {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            height: 40px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            padding: 0 12px;
+            font-size: 15px;
+            color: #222;
+            background: #fafafa;
+            outline: none;
+            transition: border-color .2s, background .2s, box-shadow .2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-item input:focus {
+            border-color: #ff5500;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.12);
+        }
+
+        .form-item input::-webkit-outer-spin-button,
+        .form-item input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .form-item input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .btn-enter {
+            width: 100%;
+            height: 46px;
+            border: none;
+            border-radius: 23px;
+            margin-top: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #fff;
+            cursor: pointer;
+            background: linear-gradient(90deg, #ff9f5a 0%, #ff5a1f 100%);
+            box-shadow: 0 6px 16px rgba(255, 90, 31, 0.3);
+            transition: transform .15s, box-shadow .15s;
+        }
+
+        .btn-enter:active {
+            transform: scale(.98);
+            box-shadow: 0 3px 10px rgba(255, 90, 31, 0.25);
+        }
+
+        .tip {
+            text-align: center;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 20px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 400px) {
+            .form-grid { grid-template-columns: 1fr; }
+            body { padding: 24px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="entry-wrap">
+        <div class="page-title">余额装X</div>
+        <div class="page-sub">选择要进入的页面，可先编辑展示数据</div>
+
+        <!-- 选择1：微信 / 支付宝 -->
+        <div class="choice-card" id="cardVx">
+            <div class="choice-head">
+                <div class="choice-icon icon-vx">微</div>
+                <div class="choice-info">
+                    <div class="choice-name">微信钱包</div>
+                    <div class="choice-desc">编辑零钱、零钱通金额</div>
+                </div>
+                <div class="choice-check">✓</div>
+            </div>
+
+            <!-- 选择2-①：vx 编辑表单 -->
+            <div class="form-panel">
+                <div class="form-title">① 编辑微信钱包数据</div>
+                <div class="form-grid">
+                    <div class="form-item">
+                        <label for="vx_lingqian">零钱金额 (元)</label>
+                        <input id="vx_lingqian" type="text" inputmode="decimal" value="278.84">
+                    </div>
+                    <div class="form-item">
+                        <label for="vx_lingqiantong">零钱通金额 (元)</label>
+                        <input id="vx_lingqiantong" type="text" inputmode="decimal" value="434.19">
+                    </div>
+                </div>
+                <button class="btn-enter" id="btnEnterVx">进入微信钱包</button>
+            </div>
+        </div>
+
+        <div class="choice-card" id="cardZfb">
+            <div class="choice-head">
+                <div class="choice-icon icon-zfb">支</div>
+                <div class="choice-info">
+                    <div class="choice-name">支付宝 · 余额宝</div>
+                    <div class="choice-desc">编辑状态栏、金额、收益与理财利率</div>
+                </div>
+                <div class="choice-check">✓</div>
+            </div>
+
+            <!-- 选择2-②：zfb 编辑表单 -->
+            <div class="form-panel">
+                <div class="form-title">② 编辑余额宝数据</div>
+                <div class="form-grid">
+                    <div class="form-item">
+                        <label for="zfb_time">状态栏时间</label>
+                        <input id="zfb_time" type="text" value="10:33">
+                    </div>
+                    <div class="form-item">
+                        <label for="zfb_battery">电量比值 (0-100)</label>
+                        <input id="zfb_battery" type="number" min="0" max="100" value="41">
+                    </div>
+                    <div class="form-item full">
+                        <label for="zfb_rate7d">七日年化率 (%)</label>
+                        <input id="zfb_rate7d" type="text" inputmode="decimal" value="0.9620">
+                    </div>
+                    <div class="form-item full">
+                        <label for="zfb_total">总金额 (元)</label>
+                        <input id="zfb_total" type="text" inputmode="decimal" value="1065510.96">
+                    </div>
+                    <div class="form-item">
+                        <label for="zfb_available">可用 (元)</label>
+                        <input id="zfb_available" type="text" inputmode="decimal" value="1065510.96">
+                    </div>
+                    <div class="form-item">
+                        <label for="zfb_saved">攒着 (元)</label>
+                        <input id="zfb_saved" type="text" inputmode="decimal" value="0.00">
+                    </div>
+                    <div class="form-item">
+                        <label for="zfb_yesterday">昨日收益 (元)</label>
+                        <input id="zfb_yesterday" type="text" inputmode="decimal" value="21.70">
+                    </div>
+                    <div class="form-item">
+                        <label for="zfb_cumulative">累计收益 (元)</label>
+                        <input id="zfb_cumulative" type="text" inputmode="decimal" value="100175.27">
+                    </div>
+                    <div class="form-item">
+                        <label for="zfb_huoqi">活期理财利率 (%)</label>
+                        <input id="zfb_huoqi" type="text" inputmode="decimal" value="1.92">
+                    </div>
+                    <div class="form-item">
+                        <label for="zfb_dingqi">定期理财利率 (%)</label>
+                        <input id="zfb_dingqi" type="text" inputmode="decimal" value="3.36">
+                    </div>
+                </div>
+                <button class="btn-enter" id="btnEnterZfb">进入余额宝</button>
+            </div>
+        </div>
+
+        <div class="tip">编辑数据仅通过链接参数传递，<br>直接打开子页面则显示默认数据。</div>
+    </div>
+
+    <script>
+        var cardVx = document.getElementById('cardVx');
+        var cardZfb = document.getElementById('cardZfb');
+
+        cardVx.addEventListener('click', function (e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+            cardVx.classList.add('active');
+            cardZfb.classList.remove('active');
+        });
+
+        cardZfb.addEventListener('click', function (e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+            cardZfb.classList.add('active');
+            cardVx.classList.remove('active');
+        });
+
+        cardVx.classList.add('active');
+
+        function val(id) {
+            return encodeURIComponent(document.getElementById(id).value.trim());
+        }
+
+        document.getElementById('btnEnterVx').addEventListener('click', function () {
+            var qs = 'lingqian=' + val('vx_lingqian') + '&lingqiantong=' + val('vx_lingqiantong');
+            window.location.href = 'pages/vx.html?' + qs;
+        });
+
+        document.getElementById('btnEnterZfb').addEventListener('click', function () {
+            var qs = [
+                'time=' + val('zfb_time'),
+                'battery=' + val('zfb_battery'),
+                'rate7d=' + val('zfb_rate7d'),
+                'total=' + val('zfb_total'),
+                'available=' + val('zfb_available'),
+                'saved=' + val('zfb_saved'),
+                'yesterday=' + val('zfb_yesterday'),
+                'cumulative=' + val('zfb_cumulative'),
+                'huoqi=' + val('zfb_huoqi'),
+                'dingqi=' + val('zfb_dingqi')
+            ].join('&');
+            window.location.href = 'pages/zfb.html?' + qs;
+        });
+    </script>
+</body>
+</html>

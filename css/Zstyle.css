@@ -1,0 +1,714 @@
+* ================= 全局变量与重置 ================= */
+:root {
+    /* 背景：顶部橙红渐变 -> 中部白 -> 底部浅灰白 */
+    --bg-top-orange: #FF7A3D;
+    --bg-top-orange-light: #FFB88A;
+    --bg-mid-white: #FFFFFF;
+    --bg-bottom-grey: #F5F5F7;
+
+    /* 文字色 */
+    --text-black: #1A1A1A;
+    --text-dark: #222222;
+    --text-grey: #888888;
+    --text-light-grey: #B0B0B0;
+
+    /* 品牌色 */
+    --brand-orange: #FF5500;
+    --brand-orange-light: #FF8A3D;
+    --brand-red: #E63946;
+    --brand-red-deep: #D7282A;
+    --gold-yellow: #FFD700;
+
+    /* 卡片与分隔 */
+    --card-bg: #FFFFFF;
+    --border-light: #F0F0F2;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #E8E8EA;
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px 0;
+}
+
+/* ================= 手机容器 ================= */
+.phone-container {
+    width: 375px;
+    min-height: 812px;
+    background: linear-gradient(180deg, 
+        #FF7033 0%, 
+        #FF9A66 8%, 
+        #FFCBA8 16%,
+        #FFF3EC 24%,
+        #FFFFFF 32%,
+        #FFFFFF 72%,
+        #F5F5F7 100%);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 0;
+}
+
+.phone-container::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+/* ================= 1. 状态栏 ================= */
+.status-bar {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px 0 22px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 99;
+    background: #FFFFFF;
+}
+
+.status-left {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1A1A1A;
+    letter-spacing: 0.5px;
+    background: #FFFFFF;
+}
+
+.status-center-capsule {
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 3px 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.capsule-icon {
+    width: 14px;
+    height: 14px;
+    background: #2F80ED;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.capsule-icon svg {
+    width: 8px;
+    height: 8px;
+}
+
+.status-right {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.status-right svg {
+    color: #1A1A1A;
+}
+
+.icon-refresh {
+    width: 12px;
+    height: 12px;
+    margin-right: 1px;
+    color: #1A1A1A !important;
+}
+
+.signal-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+	margin-right: 4PX;
+}
+
+.net-text {
+    font-size: 6px;
+    font-weight: 500;
+    color: #1A1A1A;
+	margin-left: -12PX;
+    letter-spacing: 0.2px;
+    line-height: 1;
+	margin-bottom: -5PX;
+}
+
+.net-text-2 {
+    font-size: 6px;
+    font-weight: 500;
+	margin-left: -12PX;
+    color: #1A1A1A;
+    letter-spacing: 0.2px;
+    line-height: 1;
+	margin-bottom: -5PX;
+}
+
+.signal-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 1px;
+    height: 10px;
+    padding: 0 1px;
+}
+
+.signal-bars span {
+    width: 2px;
+    background: #1A1A1A;
+    border-radius: 0.5px;
+}
+
+.signal-bars span:nth-child(1) { height: 3px; }
+.signal-bars span:nth-child(2) { height: 5px; }
+.signal-bars span:nth-child(3) { height: 7px; }
+.signal-bars span:nth-child(4) { height: 9.5px; }
+
+.signal-bars.secondary span {
+    /* background: #8A8A8A; */
+}
+
+.battery-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 2px;
+}
+
+.battery-text {
+    font-size: 10px;
+    font-weight: 600;
+    color: #34C759;
+    margin-right: 2px;
+}
+
+.battery-box {
+    width: 21px;
+    height: 11px;
+    border: 1px solid #b3b3b3;
+    border-radius: 3px;
+    position: relative;
+    padding: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.battery-box::after {
+    content: '';
+    width: 1.5px;
+    height: 4px;
+    background: #b3b3b3;
+    position: absolute;
+    right: -2.5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 0 1px 1px 0;
+}
+
+.battery-level {
+    height: 100%;
+    width: 41%;
+    background: #34C759;
+    border-radius: 1px;
+}
+
+.bolt-icon {
+    position: absolute;
+    width: 10px !important;
+    height: 10px !important;
+    fill: #34C759;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ================= 2. 导航栏 ================= */
+.nav-bar {
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+    background: #FFFFFF;
+}
+
+.nav-left, .nav-right {
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-bar svg {
+    width: 22px;
+    height: 22px;
+    color: #2A2A2A;
+}
+
+.nav-title-box {
+    text-align: center;
+    flex: 1;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #464646;
+    /* letter-spacing: 1px; */
+}
+
+.nav-subtitle {
+    font-size: 8px;
+    color: #999999;
+    background: #f4f4f4;
+    border-radius: 14px;
+    padding: 0 2px 0 10px;
+    display: inline-block;
+    letter-spacing: 0.2px;
+}
+
+#custom-arrow-right {
+    width: 22px;         /* 控制箭头的大小，可以根据文字大小微调 */
+    height: 22px;
+    color: #D1D1D6;      /* 完美还原图片中这种淡淡的灰色 */
+    margin-left: -8px;    /*与左侧文本保持优雅的微小间距*/
+    margin-bottom: 2px;    /*与左侧文本保持优雅的微小间距*/
+    display: inline-block;
+    vertical-align: middle; /* 确保与前后的文本在垂直方向完美居中对齐 */
+    
+    /* 可选：为完美匹配图片中那种由于模糊或低分辨率带来的柔和感，可以加一点极轻的阴影 */
+    /* filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.05)); */
+}
+
+/* ================= 3. 主卡片 ================= */
+.main-card {
+    background: #ffffff;
+    margin: 6px 12px 10px 12px;
+    border-radius: 18px;
+    padding: 18px 14px 14px 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.015);
+}
+
+.balance-label-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12.5px;
+    color: #b4b0ad;
+}
+.icon-eye {
+    width: 13px;
+    height: 13px;
+    color: #A9A9A9;
+}
+.security-tag {
+    border: 1px solid #FF9E7D;
+    color: #f96231;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 0px 3px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 1.5px;
+    transform: scale(0.9);
+    transform-origin: left center;
+}
+.security-tag svg {
+    width: 8px;
+    height: 8px;
+    color: var(--brand-orange);
+}
+
+.balance-amount-row {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+}
+.balance-amount {
+    font-size: 34px;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: -0.5px;
+}
+#custom-arrow-right2 {
+    width: 28px;         /* 控制箭头的大小，可以根据文字大小微调 */
+    height: 28px;
+	font-weight: 700;
+    color: #ccccc9;      /* 完美还原图片中这种淡淡的灰色 */
+    margin-left: -6px;    /*与左侧文本保持优雅的微小间距*/
+    /* margin-bottom: 2px;    /*与左侧文本保持优雅的微小间距*/ */
+    display: inline-block;
+    vertical-align: middle; /* 确保与前后的文本在垂直方向完美居中对齐 */
+    
+    /* 可选：为完美匹配图片中那种由于模糊或低分辨率带来的柔和感，可以加一点极轻的阴影 */
+    /* filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.05)); */
+}
+
+.arrow-thin {
+    font-size: 16px;
+    color: #D1D1D6;
+    margin-left: 5px;
+    font-weight: 300;
+}
+
+/* “可用/攒着”框缩减内边距以契合原图 */
+.sub-account-box {
+    background: #FFF5F0;
+    border-radius: 8px;
+    display: flex;
+    padding: 10px 12px;
+    margin-top: 14px;
+    position: relative;
+}
+.sub-account-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.sub-label {
+    font-size: 12px;
+    color: #111111;
+		font-weight: 700;
+}
+.sub-val {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #111111;
+}
+.sub-account-divider {
+    width: 1px;
+    background: #FFFFFF;
+    margin: 0 8px 0 48px;
+}
+.add-icon-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.add-icon-btn svg {
+    width: 16px;
+    height: 16px;
+    color: var(--brand-orange);
+}
+
+/* 收益三列排版微调 */
+.profit-grid {
+    display: flex;
+    margin-top: 18px;
+}
+.profit-item {
+    flex: 1;
+}
+.profit-label {
+    font-size: 11.5px;
+    color: #b1aca9;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+.profit-label svg {
+    width: 12px;
+    height: 12px;
+    color: #C7C7CC;
+}
+.profit-val {
+    font-size: 17px;
+    font-weight: 700;
+}
+.text-red { color: #d3333a; }
+.text-dark { color: #1C1C1E; }
+.text-right { text-align: right; }
+
+.badge-tree {
+    background: linear-gradient(90deg, #ffebaf 0%, #fcd458 100%);
+    color: #f86827;
+    font-size: 9.5px;
+    font-weight: bold;
+    padding: 1px 6px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+/* 按钮组 */
+.btn-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.btn-action {
+    flex: 1;
+    height: 44px;
+    border-radius: 22px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 3px;
+}
+
+.btn-out {
+    background: #FFF5F0;
+    color: #e7885f;
+}
+
+.btn-in {
+    background: linear-gradient(90deg, #FF9F5A 0%, #FF5A1F 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(255, 90, 31, 0.25);
+}
+
+/* 定时转入 */
+.time-in-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 18px;
+    font-size: 15px;
+    color: #666666;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+.time-in-row svg {
+    width: 14px;
+    height: 14px;
+    color: var(--brand-orange);
+}
+
+.time-in-row span {
+    color: var(--brand-orange);
+    font-weight: 500;
+}
+
+/* 账户服务 */
+.service-section {
+    margin-top: 22px;
+    border-top: 1px solid #F0F0F2;
+    padding-top: 14px;
+}
+
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.service-title {
+    font-weight: 500;
+    color: #333333;
+    font-size: 15px;
+}
+
+.service-more {
+    color: #BBBBBB;
+    font-size: 13px;
+}
+
+.service-notice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.notice-left {
+    color: #333333;
+    display: flex;
+    align-items: center;
+}
+
+.notice-tag {
+    background: #EBF3FF;
+    color: #638fd1;
+    font-size: 11.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.notice-right {
+    color: #638fd1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ================= 4. 广告 Banner ================= */
+.promo-banner {
+    background: linear-gradient(90deg, #FFEFE3 0%, #FFF9F5 100%);
+    margin: 4px 14px 12px 14px;
+    border-radius: 16px;
+    padding: 14px 18px;
+    position: relative;
+    overflow: visible;
+}
+
+.promo-badge-top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #ffe4da 0%, #ffe4d8 100%);
+    color: #f56334;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 12px;
+    border-radius: 0 0 10px 10px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+.promo-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+}
+
+.promo-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.promo-icon-box {
+    width: 48px;
+    height: 48px;
+    position: relative;
+}
+
+.lucky-bag {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 2px 4px rgba(255, 90, 0, 0.2));
+}
+
+.promo-text-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.promo-text-main {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A1A1A;
+    letter-spacing: 0.3px;
+}
+
+.text-red-prom {
+    color: #E63946;
+}
+
+.promo-text-sub {
+    font-size: 13px;
+    color: #999999;
+    margin-top: 2px;
+}
+
+.promo-btn {
+    background: linear-gradient(90deg, #FF4500 0%, #FF7A20 100%);
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 22px;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+
+/* ================= 5. 稳健理财 ================= */
+.invest-section {
+    background: #FFFFFF;
+    margin: 0 14px 20px 14px;
+    border-radius: 14px;
+    padding: 16px 18px;
+}
+
+.invest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.invest-title {
+    font-weight: 500;
+    color: #515151;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+
+.invest-more {
+    color: #AAAAAA;
+    font-size: 11.5px;
+	margin-right: -6px;
+}
+
+.invest-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+}
+
+.invest-item:not(:last-child) {
+    border-bottom: 1px solid #F2F2F5;
+}
+
+.invest-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #888888;
+}
+
+.invest-desc {
+    font-size: 12.5px;
+    color: #cbcbcb;
+    margin-top: 4px;
+}
+
+.invest-rate-box {
+    text-align: right;
+}
+
+.invest-rate {
+    font-size: 15px;
+    font-weight: 500;
+    color: #E63946;
+	font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.invest-rate-label {
+    font-size: 11.5px;
+    color: #cbcbcb;
+    margin-top: 3px;
+}

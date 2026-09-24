@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>余额宝</title>
+		<link rel="stylesheet" href="../css/Zstyle.css">
+	</head>
+	<body>
+
+		<div class="phone-container">
+			<!-- ================= 1. 安卓系统状态栏 ================= -->
+			<div class="status-bar">
+				<!-- 时间 -->
+				<div class="status-left" id="statusTime">10:33</div>
+
+				<!-- 顶部黑色椭圆胶囊通知 -->
+				<div class="status-center-capsule">
+					<div class="capsule-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3">
+							<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+							<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+						</svg>
+					</div>
+					<span>1 台</span>
+				</div>
+
+				<!-- 右侧状态图标 -->
+				<div class="status-right">
+					<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3">
+						<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+						<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+					</svg>
+					<!-- <span class="net-text">5G</span> -->
+					<!-- 主卡信号 -->
+					<div class="signal-group">
+						<span class="net-text">5G</span>
+						<div class="signal-bars">
+							<span></span><span></span><span></span><span></span>
+						</div>
+					</div>
+					<!-- 副卡信号 5GA -->
+					<!-- <span class="net-text">5GA</span> -->
+					<div class="signal-group">
+						<span class="net-text-2">5GA</span>
+						<div class="signal-bars secondary">
+							<span></span><span></span><span></span><span></span>
+						</div>
+					</div>
+					<!-- 电量 -->
+					<div class="battery-wrapper">
+						<!-- <span class="battery-text">41</span> -->
+					<div class="battery-box">
+						<div class="battery-level" id="batteryLevel"></div>
+							<!-- 电量雷电标志 -->
+							<!-- <svg class="bolt-icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg> -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ================= 2. 头部导航栏 ================= -->
+			<div class="nav-bar">
+				<div class="nav-left" id="navBack" style="cursor:pointer">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<polyline points="15 18 9 12 15 6"></polyline>
+					</svg>
+				</div>
+				<div class="nav-title-box">
+					<div class="nav-title">余额宝</div>
+					<div class="nav-subtitle">七日年化<span id="rate7d">0.9620%</span>
+						<svg id="custom-arrow-right" t="1789992254940" class="icon" viewBox="0 0 1024 1024"
+							version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2675" width="20" height="20">
+							<path
+								d="M633.69543222 513.62121222l-187.91964261 186.24304734a16.47896769 16.47896769 0 0 0-0.06797007 23.35149777l5.83535703 5.85801374a16.61490785 16.61490785 0 0 0 23.42702007 0.07048748l205.55661903-203.7088399a16.50917662 16.50917662 0 0 0 0.07048747-23.36156739L476.24904106 297.14910222c-6.45212255-6.46219219-16.94972342-6.49491851-23.42702006-0.06797008l-5.87060078 5.82276999a16.49407215 16.49407215 0 0 0-0.07048749 23.36408481l186.81449949 187.35322528z"
+								fill="#bfbfbf" p-id="2676"></path>
+						</svg>
+					</div>
+				</div>
+				<div class="nav-right">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<circle cx="5" cy="12" r="1"></circle>
+						<circle cx="12" cy="12" r="1"></circle>
+						<circle cx="19" cy="12" r="1"></circle>
+					</svg>
+				</div>
+			</div>
+
+			<!-- ================= 3. 核心资产主卡片 ================= -->
+			<div class="main-card">
+				<!-- 总金额标签栏 -->
+				<div class="balance-label-row">
+					<span class="label-main-text">总金额(元)</span>
+					<svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+						<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+						<circle cx="12" cy="12" r="3"></circle>
+					</svg>
+					<div class="security-tag">
+						<svg viewBox="0 0 24 24" fill="currentColor">
+							<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+						</svg>
+						<span>资金安全</span>
+					</div>
+				</div>
+
+				<!-- 主金额 -->
+				<div class="balance-amount-row">
+					<span class="balance-amount" id="totalAmount">1,065,510.96</span>
+					<svg id="custom-arrow-right2" t="1789992254940" class="icon" viewBox="0 0 1024 1024" version="1.1"
+						xmlns="http://www.w3.org/2000/svg" p-id="2675" width="20" height="20">
+						<path
+							d="M633.69543222 513.62121222l-187.91964261 186.24304734a16.47896769 16.47896769 0 0 0-0.06797007 23.35149777l5.83535703 5.85801374a16.61490785 16.61490785 0 0 0 23.42702007 0.07048748l205.55661903-203.7088399a16.50917662 16.50917662 0 0 0 0.07048747-23.36156739L476.24904106 297.14910222c-6.45212255-6.46219219-16.94972342-6.49491851-23.42702006-0.06797008l-5.87060078 5.82276999a16.49407215 16.49407215 0 0 0-0.07048749 23.36408481l186.81449949 187.35322528z"
+							fill="#bfbfbf" p-id="2676"></path>
+					</svg>
+				</div>
+
+				<!-- 可用/攒着细分账户栏 -->
+				<div class="sub-account-box">
+					<div class="sub-account-item">
+					<span class="sub-label">可用</span>
+					<span class="sub-val" id="availableAmount">1065510.96</span>
+					</div>
+					<div class="sub-account-divider"></div>
+					<div class="sub-account-item">
+					<span class="sub-label">攒着</span>
+					<span class="sub-val" id="savedAmount">0.00</span>
+					</div>
+					<div class="add-icon-btn">
+						<svg viewBox="0 0 24 24" fill="none" stroke="#f07d4f" stroke-width="2.5">
+							<circle cx="12" cy="12" r="10"></circle>
+							<line x1="12" y1="8" x2="12" y2="16"></line>
+							<line x1="8" y1="12" x2="16" y2="12"></line>
+						</svg>
+					</div>
+				</div>
+
+				<!-- 收益网格布局 -->
+				<div class="profit-grid">
+					<div class="profit-item">
+						<div class="profit-label">
+							<span>昨日收益(元)</span>
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+								<line x1="12" y1="17" x2="12.01" y2="17"></line>
+							</svg>
+						</div>
+						<div class="profit-val text-red" id="yesterdayProfit">21.70</div>
+					</div>
+					<div class="profit-item">
+					<div class="profit-label">累计收益(元)</div>
+					<div class="profit-val text-dark" id="cumulativeProfit">100,175.27</div>
+					</div>
+					<div class="profit-item">
+						<div class="profit-label justify-end">收益+</div>
+						<div class="badge-tree">摇钱树</div>
+					</div>
+				</div>
+
+				<!-- 操作按钮组 -->
+				<div class="btn-group">
+					<button class="btn-action btn-out">转出</button>
+					<button class="btn-action btn-in">转入</button>
+				</div>
+
+				<!-- 定时转入入口 -->
+				<div class="time-in-row">
+					<svg viewBox="0 0 24 24" fill="none" stroke="#e88e6f" stroke-width="2">
+						<circle cx="12" cy="12" r="10"></circle>
+						<polyline points="12 6 12 12 16 14"></polyline>
+					</svg>
+					<span>定时转入 <svg id="custom-arrow-right" t="1789992254940" class="icon" viewBox="0 0 1024 1024"
+							version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2675" width="20" height="20">
+							<path
+								d="M633.69543222 513.62121222l-187.91964261 186.24304734a16.47896769 16.47896769 0 0 0-0.06797007 23.35149777l5.83535703 5.85801374a16.61490785 16.61490785 0 0 0 23.42702007 0.07048748l205.55661903-203.7088399a16.50917662 16.50917662 0 0 0 0.07048747-23.36156739L476.24904106 297.14910222c-6.45212255-6.46219219-16.94972342-6.49491851-23.42702006-0.06797008l-5.87060078 5.82276999a16.49407215 16.49407215 0 0 0-0.07048749 23.36408481l186.81449949 187.35322528z"
+								fill="#bfbfbf" p-id="2676"></path>
+						</svg>
+					</span>
+				</div>
+
+				<!-- 账户服务公告区域 -->
+				<div class="service-section">
+					<div class="service-header">
+						<span class="service-title">账户服务</span>
+						<span class="service-more">更多 &gt;</span>
+					</div>
+					<div class="service-notice">
+						<div class="notice-left">
+							<span class="notice-tag">用钱</span>到店支付立得1元现金
+						</div>
+						<div class="notice-right">去参与</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ================= 4. 月月招财节广告 Banner ================= -->
+			<div class="promo-banner">
+				<div class="promo-badge-top">月月招财节</div>
+				<div class="promo-content">
+					<div class="promo-left">
+						<div class="promo-icon-box">
+							<!-- 红包/福袋 SVG -->
+							<svg class="lucky-bag" viewBox="0 0 64 64">
+								<defs>
+									<linearGradient id="bagGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+										<stop offset="0%" stop-color="#FF7A45" />
+										<stop offset="100%" stop-color="#FF3B00" />
+									</linearGradient>
+								</defs>
+								<path
+									d="M12,24 C12,14 20,10 32,10 C44,10 52,14 52,24 L48,54 C48,58 42,60 32,60 C22,60 16,58 16,54 Z"
+									fill="url(#bagGrad)" />
+								<ellipse cx="32" cy="20" rx="17" ry="6" fill="#FFB088" opacity="0.9" />
+								<path d="M8 22 Q16 18 24 22" stroke="#FFD800" stroke-width="2.5" fill="none"
+									opacity="0.7" />
+								<!-- 金币圆 -->
+								<circle cx="32" cy="38" r="9" fill="#FFD200" />
+								<circle cx="32" cy="38" r="6" fill="#FFE066" />
+								<!-- 上升箭头 -->
+								<path d="M48 38 L56 38 L56 30 L60 30 L54 20 L48 30 L52 30 Z" fill="#FFB800" />
+							</svg>
+						</div>
+						<div class="promo-text-group">
+							<div class="promo-text-main">你被<span class="text-red-prom">红包</span>砸中啦</div>
+							<div class="promo-text-sub">本月限量福利</div>
+						</div>
+					</div>
+					<div class="promo-btn">立即领取 &gt;</div>
+				</div>
+			</div>
+
+			<!-- ================= 5. 下部稳健理财产品推荐列表 ================= -->
+			<div class="invest-section">
+				<div class="invest-header">
+					<span class="invest-title">稳健理财</span>
+					<span class="invest-more">追求更高收益 <svg id="custom-arrow-right" t="1789992254940" class="icon"
+							viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2675"
+							width="20" height="20">
+							<path
+								d="M633.69543222 513.62121222l-187.91964261 186.24304734a16.47896769 16.47896769 0 0 0-0.06797007 23.35149777l5.83535703 5.85801374a16.61490785 16.61490785 0 0 0 23.42702007 0.07048748l205.55661903-203.7088399a16.50917662 16.50917662 0 0 0 0.07048747-23.36156739L476.24904106 297.14910222c-6.45212255-6.46219219-16.94972342-6.49491851-23.42702006-0.06797008l-5.87060078 5.82276999a16.49407215 16.49407215 0 0 0-0.07048749 23.36408481l186.81449949 187.35322528z"
+								fill="#bfbfbf" p-id="2676"></path>
+						</svg>
+					</span>
+				</div>
+
+				<div class="invest-item">
+					<div>
+						<div class="invest-name">活期理财</div>
+						<div class="invest-desc">灵活申赎</div>
+					</div>
+					<div class="invest-rate-box">
+						<div class="invest-rate" id="huoqiRate">1.92%</div>
+						<div class="invest-rate-label">成立以来年化增长</div>
+					</div>
+				</div>
+
+				<div class="invest-item">
+					<div>
+						<div class="invest-name">定期理财</div>
+						<div class="invest-desc">追求更高收益</div>
+					</div>
+					<div class="invest-rate-box">
+						<div class="invest-rate" id="dingqiRate">3.36%</div>
+						<div class="invest-rate-label">成立以来年化增长</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			(function () {
+				var params = new URLSearchParams(window.location.search);
+
+				function get(key) {
+					return params.has(key) ? params.get(key) : null;
+				}
+
+				function parseAmount(v) {
+					if (v === null) return null;
+					var n = parseFloat(String(v).replace(/,/g, ''));
+					return isNaN(n) ? null : n;
+				}
+
+				function formatAmount(n) {
+					return n.toLocaleString('zh-CN', {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					});
+				}
+
+				function setText(id, text) {
+					document.getElementById(id).textContent = text;
+				}
+
+				// 保留原始字符串的利率值（避免 0.9620 被截成 0.962）
+				function getRate(key) {
+					var raw = get(key);
+					if (raw === null) return null;
+					raw = String(raw).replace(/,/g, '').replace(/%$/, '');
+					return isNaN(parseFloat(raw)) ? null : raw;
+				}
+
+				// 时间
+				var time = get('time');
+				if (time) setText('statusTime', time);
+
+				// 电量比值
+				var battery = parseAmount(get('battery'));
+				if (battery !== null) {
+					battery = Math.max(0, Math.min(100, battery));
+					document.getElementById('batteryLevel').style.width = battery + '%';
+				}
+
+				// 七日年化率
+				var rate7d = getRate('rate7d');
+				if (rate7d !== null) setText('rate7d', rate7d + '%');
+
+				// 总金额
+				var total = parseAmount(get('total'));
+				if (total !== null) setText('totalAmount', formatAmount(total));
+
+				// 可用
+				var available = parseAmount(get('available'));
+				if (available !== null) setText('availableAmount', formatAmount(available));
+
+				// 攒着
+				var saved = parseAmount(get('saved'));
+				if (saved !== null) setText('savedAmount', formatAmount(saved));
+
+				// 昨日收益
+				var yesterday = parseAmount(get('yesterday'));
+				if (yesterday !== null) setText('yesterdayProfit', formatAmount(yesterday));
+
+				// 累计收益
+				var cumulative = parseAmount(get('cumulative'));
+				if (cumulative !== null) setText('cumulativeProfit', formatAmount(cumulative));
+
+				// 活期理财利率
+				var huoqi = getRate('huoqi');
+				if (huoqi !== null) setText('huoqiRate', huoqi + '%');
+
+				// 定期理财利率
+				var dingqi = getRate('dingqi');
+				if (dingqi !== null) setText('dingqiRate', dingqi + '%');
+
+				// 返回入口页
+				document.getElementById('navBack').addEventListener('click', function () {
+					window.location.href = '../index.html';
+				});
+			})();
+		</script>
+
+	</body>
+</html>
